@@ -1,4 +1,4 @@
-package tictactoc;
+
 import java.util.Random; 
 public class Computer extends Player {
 

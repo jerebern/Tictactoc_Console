@@ -1,4 +1,4 @@
-package tictactoc;
+
 public class Grid {
     private char[][] sqarre;
     private int playTurn;
