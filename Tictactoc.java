@@ -1,39 +1,46 @@
- 
+package tictactoc;
+
 import java.util.*;
 
-import javax.swing.text.StyledEditorKit.BoldAction; 
  public class Tictactoc {
     private Grid grid;
     private Player[] players;
     private GameState gameState;
+    private int turn;
     private enum GameState{
         PLAYER1_TURN,
         PLAYER2_TURN
     }
     public Tictactoc(){    
         this.players = new Player [2];
-        this.players[0] = new Player('X');
-        this.players[1] = new Player('O');
+        players[0] = new Computer('X');
+        players[1] = new Computer('O');
+        this.players[0] = new Computer('X');
+        this.players[1] = new Computer('O');
         this.grid = new Grid();
+        this.turn = 0 ; 
     };
     public Grid get_Grid(){
         return this.grid;
     }
-
-    //To do 
-    public void Config_Game(){
-        String choice;
-        System.out.print("Enter number of player : \n");
-        System.out.println("Enter numnber of round :");
-     //   Scanner sc = new Scanner(System.in);  
-
-        players[0] = new Computer('X');
-        players[1] = new Computer('O');
- 
+    public void inc_turn() {
+    	turn++;
+    }
+    public int get_turn() {
+    	return turn;
+    }
+    public Boolean check_tie() {
+    	if(this.turn < 9) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
+
     public Player get_Player(int number) {
-        return this.players[number];
+         return this.players[number];
         
     }
 
@@ -47,10 +54,7 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
      public static void main(String[] args) {
         int turnToCheck = 0;
-        int turn = 0;
         Tictactoc tictactoc = new Tictactoc();
-            tictactoc.Config_Game();
-           // tictactoc.Play_all_round();
             tictactoc.set_GameState(GameState.PLAYER1_TURN);
 
                 do{
@@ -68,21 +72,17 @@ import javax.swing.text.StyledEditorKit.BoldAction;
                         turnToCheck = 1 ;               
                         break;
                     }
-                    turn++;
-                    System.out.println(turn);
+                    tictactoc.inc_turn();
+                    //System.out.println(turn);
                     tictactoc.get_Grid().Draw();
-                } while(!tictactoc.get_Grid().CheckifWinner(tictactoc.get_Player(turnToCheck).Get_Piece()) && turn < 9);
+                } while(!tictactoc.get_Grid().CheckifWinner(tictactoc.get_Player(turnToCheck).Get_Piece()) && tictactoc.check_tie());
 
-                if(turn == 9){
-
+                if(!tictactoc.check_tie()) {
                     System.out.println("Tie");
                 }
                 else{
                    System.out.println("Player : " + tictactoc.get_Player(turnToCheck).Get_Piece() + " Win");
                 }
-  
-
-        
 
     }
 
